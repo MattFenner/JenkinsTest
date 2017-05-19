@@ -17,8 +17,11 @@ echo "hello world" > test.txt'''
           },
           "auto": {
             sh '''cd artifacts
-$result = $(cat test.txt) == "hello world"
-exit $result'''
+
+str="hello world"
+if [[ $(< test.txt) != "$str" ]]; then
+    exit 1
+fi'''
             
           }
         )
