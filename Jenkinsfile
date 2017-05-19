@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh '''mkdir artifacts
+        sh '''mkdir -p artifacts
 cd artifacts
 echo "hello world" > test.txt'''
       }
