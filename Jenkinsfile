@@ -16,7 +16,8 @@ echo "hello world" > test.txt'''
             
           },
           "auto": {
-            sh 'exit $(cat test.txt) == "hello world"'
+            sh '''cd artifacts
+exit $(cat test.txt) == "hello world"'''
             
           }
         )
