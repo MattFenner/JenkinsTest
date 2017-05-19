@@ -3,27 +3,20 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        parallel(
-          "build a": {
-            sleep 30
-            
-          },
-          "build b": {
-            sleep 10
-            
-          }
-        )
+        sh '''mkdir artifacts
+cd artifacts
+echo "hello world" > test.txt'''
       }
     }
     stage('Test') {
       steps {
         parallel(
-          "Test": {
-            echo 'printing a message'
+          "manual": {
+            input(message: 'good?', id: 'good', ok: 'Yes')
             
           },
-          "": {
-            input(message: 'good?', id: 'good', ok: 'OK')
+          "auto": {
+            sh 'exit $(cat test.txt) == "hello world"'
             
           }
         )
@@ -31,9 +24,8 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh '''echo hi
-
-sleep 30s'''
+        input(message: 'deploy?', id: 'deploy', ok: 'do it!')
+        sh 'echo "deploying!"'
       }
     }
   }
